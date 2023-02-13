@@ -46,6 +46,7 @@ class Ui_Dialog(object):
         self.label_txt_divide = QtWidgets.QLabel(Dialog)
         self.label_txt_divide.setGeometry(QtCore.QRect(330, 140, 141, 21))
         self.label_txt_divide.setObjectName("label_txt_divide")
+        self.txt = self.textEdit_2.toPlainText()
         self.tableWidget = QtWidgets.QTableWidget(Dialog)
         self.tableWidget.setGeometry(QtCore.QRect(40, 210, 671, 411))
         self.tableWidget.setObjectName("tableWidget")
@@ -77,12 +78,13 @@ class Ui_Dialog(object):
             self.file_open = pd.read_excel(self.dir_path[0])
 
     def OnClickDivideQR(self):
-        txt = self.textEdit_2.toPlainText()
         file_open = pd.read_excel(self.dir_path[0], sheet_name= 0, header = None)
-        split_file = file_open[0].str.split(txt, expand=True)
+        split_file = file_open[0].str.split(self.txt, expand=True)
         first_remove = split_file[~split_file[0].str.contains("[ㄱ-ㅣ가-힣]+", na=True, case=False)]
         second_remove = first_remove[~first_remove[2].str.contains("[ㄱ-ㅣ가-힣]+", na=True, case=False)]
         self.sort_file = second_remove.sort_values(by=[3,0], ascending=[True, True])
+
+        
 
 if __name__ == "__main__":
     import sys
